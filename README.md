@@ -9,15 +9,6 @@
 - При разработке был использован Python3.10, то есть для использования он точно подойдет.
 
 ## Скрипты и их запуск
-### Запуск через import
-
-Для данного метода требуется:
-
-- Скачать файл `scripts.py` и поместить его в папке, где находится `manage.py`.
-
-- 
-
-### Запуск через shell
 
 Для запуска через shell, потребуется:
 
@@ -40,47 +31,22 @@ python manage.py shell
 fix_marks('Иванов Иван Иванович')
 ```
 
-### 
+#### remove_chastisements
 
+В качестве аргумента, принимат ФИО ученика.
 
+Удаляет все замечания из дненивника.
 
-Сам запуск будем производить путем копирования одних из скриптов в зависимости от цели. 
-Необходимы будут только корректировки в наименовании ученика.
-
-
-
-***
-3. Полное удаление замечаний на ученика.
+Для работы, требуется прописать в `shell`
 ```Python
-from datacenter.models import Schoolkid, Mark, Chastisement, Lesson, Commendation
-def remove_chastisements(schoolkid_name):
-    schoolkid = checks_pupil(schoolkid_name)
-    if schoolkid:
-        chastisement = Chastisement.objects.filter(schoolkid=schoolkid)
-        chastisement.delete()
+remove_chastisements('Иванов Иван Иванович')
 ```
-    Запускается посредством копирования в командную строку `shell` и запускается: 
-```
-remove_chastisements("ФИО школьника")
-```
-***
-4. Данный скрипт отмечает похвалу в базе данных ученика.
+
+#### create_commendation
+
+В качестве аргумента, принимат ФИО ученика и предмет, на уроке которого, вы "получили" похвалу.
+
+Для работы, требуется прописать в `shell`
 ```Python
-import random
-from datacenter.models import Schoolkid, Mark, Chastisement, Lesson
-def create_commendation(schoolkid_name, subject):
-    schoolkid = checks_pupil(schoolkid_name)
-    if schoolkid:
-        lesson = Lesson.objects.filter(subject__title=subject, year_of_study=schoolkid.year_of_study,
-                                       group_letter=schoolkid.group_letter).order_by("subject").first()
-        if lesson is None:
-            print('Данного урока не найдено')
-        else:
-            random_commendations = random.choice(COMMENDATIONS)
-            Commendation.objects.create(text=random_commendations, created=lesson.date, schoolkid=schoolkid,
-                                        subject=lesson.subject, teacher=lesson.teacher)
-```
-    Запускается посредством копирования в командную строку `shell` и запускается: 
-```
-create_commendation("ФИО школьника", "Предмет")
+create_commendation('Иванов Иван Иванович', 'Математика')
 ```
