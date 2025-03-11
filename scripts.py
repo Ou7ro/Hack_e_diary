@@ -55,9 +55,12 @@ def create_commendation(schoolkid_name, subject):
         lesson = Lesson.objects.filter(
             subject__title=subject, year_of_study=schoolkid.year_of_study,
             group_letter=schoolkid.group_letter).order_by('subject').first()
-        commendation = Commendation.objects.create(
-            text=choice(PRAISES), created=lesson.date,
-            schoolkid=schoolkid, subject=lesson.subject, teacher=lesson.teacher)
+        if lesson:
+            commendation = Commendation.objects.create(
+                text=choice(PRAISES), created=lesson.date,
+                schoolkid=schoolkid, subject=lesson.subject, teacher=lesson.teacher)
+        else:
+            print('Этот предмет у данного ученика не преподается')
 
 
 def checks_pupil(schoolkid_name):
