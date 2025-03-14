@@ -7,7 +7,10 @@
 - Какую версию python использовать, зависит от используемой вами версии [Djangо](https://docs.djangoproject.com/en/4.0/faq/install/#what-python-version-can-i-use-with-django)
 
 - При разработке был использован Python3.10, то есть для использования он точно подойдет.
-
+- Затем используйте pip для установки зависимостей:
+```
+pip install -r requirements.txt
+```
 ## Скрипты и их запуск
 
 Для запуска через shell, потребуется:
